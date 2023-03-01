@@ -33,13 +33,18 @@
         var number = document.getElementById("number").value;
         var limit = document.getElementById("limit").value;
 
-        var html = "";
-
-        for (let index = 1; index <= limit; index++) {
-            html += "<h4>" + number + " x " + index + " = " + (number * index) + "</h4>";
+        if (number > 0) {
+          var html = "";
+  
+          for (let index = 1; index <= limit; index++) {
+              html += "<h4>" + number + " x " + index + " = " + (number * index) + "</h4>";
+          }
+  
+          document.getElementById("printTable").innerHTML = html;
         }
-
-        document.getElementById("printTable").innerHTML = html;
+        else {
+          document.getElementById("printTable").innerHTML = "Number must be greater than 0";
+        }
 
     }
 </script>
