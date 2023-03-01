@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Tic Tac Toe</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="products" content="iPhone,iSO,macOS,macBook,iPad,iPod,AirPods">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+<div class="container mt-3">
+  <h2>Tic Tac Toe</h2>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="col-md-4">
+        <button type="button" class="btn btn-primary" onclick="ReverseText()">Tic Tac Toe</button>
+      </div>
+      <div class="col-md-4">
+        <button type="button" class="btn btn-primary" onclick="ReverseText()">Tic Tac Toe</button>
+      </div>
+      <div class="col-md-4">
+        <button type="button" class="btn btn-primary" onclick="ReverseText()">Tic Tac Toe</button>
+      </div>
+
+      
+    </div>
+  </div>
+
+  
+  
+</div>
+
+<script>
+
+  var words = [];
+
+  function ReverseText() {
+    var word = document.getElementById("word").value.toLowerCase();
+  
+    if (words.includes(word)) {
+      alert("You have already checked word: " + word);
+    }
+    else {
+      words.push(word);
+
+      var reversedWord = "";
+
+      for (let index = word.length - 1; index >= 0; index--) {
+          reversedWord += word[index];
+      }
+
+      if (word == reversedWord) {
+        document.getElementById("isAPailndrome").innerHTML += "<li class='list-group-item'>"+word+"</li>";
+      }
+      else {
+        document.getElementById("notAPailndrome").innerHTML += "<li class='list-group-item'>"+word+"</li>";
+      }
+    }
+  }
+</script>
+
+</body>
+</html>
