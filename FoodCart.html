@@ -1,0 +1,313 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Gallery</title>
+	<link href="../css/bootstrap.min.css" rel="stylesheet" />
+	<script src="../js/bootstrap.bundle.min.js"></script>
+	<link href="../css/galleryStyle.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+	
+	<div class="container-fluid p-5 bg-dark text-success text-center">
+	  <h1 id="titleHeading">My First Bootstrap Page</h1>
+	  <p>Resize this responsive page to see the effect!</p> 
+	</div>
+	
+	<br />
+	
+	<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+	  <div class="container-fluid">
+		<a class="navbar-brand" href="javascript:void(0)">Logo</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="mynavbar">
+		  <ul class="navbar-nav me-auto">
+			<li class="nav-item">
+			  <a class="nav-link" href="javascript:void(0)">Link</a>
+			</li>
+			<li class="nav-item">
+			  <a class="nav-link" href="javascript:void(0)">Link</a>
+			</li>
+			<li class="nav-item">
+			  <a class="nav-link" href="javascript:void(0)">Link</a>
+			</li>
+		  </ul>
+			
+		  <form class="d-flex">
+			  <ul class="navbar-nav me-auto">
+				  <li class="nav-item">
+				  <i id="cartCounter" style="color: white" class="fa fa-shopping-cart" aria-hidden="true"></i>
+					  
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link" href="javascript:void(0)">Link</a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link" href="javascript:void(0)">Link</a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link" href="javascript:void(0)">Link</a>
+				</li>
+			  </ul>
+			<input class="form-control me-2" id="searchTxt" type="text" placeholder="Search">
+			<button class="btn btn-primary" onClick="Search2()" type="button">Search</button>
+		  </form>
+		</div>
+	  </div>
+	</nav>
+
+	<!-- MAIN (Center website) -->
+	<div class="main">
+		
+		<button onClick="CheckOut()" id="checkoutBtn" type="button" class="btn btn-warning">Checkout</button>
+		<button onClick="ContinueShopping()" id="continueBtn" type="button" class="btn btn-warning">Continue Shopping</button>
+		
+		<hr>
+		
+		<div class="container mt-3" id="checkoutTable">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Product Name</th>
+						<th>Price</th>
+						<th>Quantity</th>
+						<th>Total Price</th>
+					</tr>
+				</thead>
+				<tbody id="tableBody">
+
+				</tbody>
+			</table>
+		</div>
+		
+
+		<!-- Portfolio Gallery Grid -->
+		<div class="row" id="galleryArea">
+			
+		<!-- END GRID -->
+		</div>
+
+	<!-- END MAIN -->
+	</div>
+
+	<script>
+		document.getElementById("checkoutTable").style.display = "none";
+		
+		document.getElementById("continueBtn").style.display = "none";
+		
+		var productnames= ["Beef Enchiladas","Coconut Shrimp & Sauce","Frito Pie","Lamb Gyros & Tzatziki Sauce","General Tso’s Chicken","Beer Brown Sugar Kielbasa","Beef Biryani","Chicken Biryani","Mutton Korma","Chicken Korma","Gola Kabab Karhai","Seekh Kabab","Chapli Kabab","Shami Kabab","Aloo  Paneer Kofta","Beef Kofta Curry","Potato Bell Paper Sabzi","Mixed Sabzi Karhai","Lasania Batata","Sauces","Cranberry Coke","Gabbie’s Punch","Coconut Lavender Lemonade","Blue Shoe","Sweet Lassi","Salted Lassi","Flavoured Lassi","Mango Lassi","Strawberry Juice","Peach Drink","Meyer Lemon Bars","Poppyseed Cake & Fruit Curd","Chocomint Ice Cream","Salted Caramel Choco Tart","Butterscotch Cashew Bars","Vanilla Pudding","Rasmalai","Shahi Tukry","Fruit Custard","Sicilian Canoli","Caprese Salad with Pesto Sauce","Bruschetta","Pasta Carbonara","Margherita Pizza","Mushroom Risotto","Dim Sums","Hot and Sour Soup","Noodles","Szechwan Chilli Chicken","Spring Rolls","Broast","Zinger","Club Sandwich","Chicken Mayo Roll","Tikka","Potato Fries"];
+		
+		var productprices=[190, 220, 210, 180, 200, 160, 150, 170, 170, 180, 200, 200, 190, 190, 150, 200, 210, 110, 170, 100, 100, 120, 160, 110, 110, 110, 120, 140, 110, 100, 220, 220, 210, 210, 220, 120, 160, 180, 140, 160, 140, 170, 180, 190, 220, 150, 120, 130, 140, 150, 130, 130, 130, 100, 140, 100];		
+		
+		var html = "";		
+		
+		for (var i = 0; i < 56; i++){
+			html = html + "<div class='column'><div style='height: 400px !important;' class='content'><img src='../img/m"+i+".jpg' alt='Mountains' style='width:100%'><h3>"+productnames[i]+"</h3><h5>Rs. "+productprices[i]+"/=</h5><button onClick='AddProductToCart("+i+")' type='button' class='btn btn-outline-warning'>Add to Cart</button></div></div>";
+		}
+		
+		document.getElementById("galleryArea").innerHTML = html;		
+		
+		var cartArray = [];
+		if (localStorage.getItem('cartArray') !== undefined && localStorage.getItem('cartArray') !== null) {
+			cartArray = JSON.parse(localStorage.getItem('cartArray'));
+			document.getElementById("cartCounter").innerHTML = " " + cartArray.length;
+		}
+		
+		// Parameterized Function
+		function AddProductToCart(i){			
+			cartArray.push(i);
+			
+			// setting in local storage
+			localStorage.setItem("cartArray", JSON.stringify(cartArray));
+			
+			document.getElementById("cartCounter").innerHTML = " " + cartArray.length;			
+			HideShowCheckoutBtn();
+		}		
+		
+		function HideShowCheckoutBtn(){
+			if (cartArray.length > 0){
+				document.getElementById("checkoutBtn").style.display = "block";
+			}
+			else {
+				document.getElementById("checkoutBtn").style.display = "none";
+			}
+		}	
+		
+		HideShowCheckoutBtn();	
+		
+		function onlyUnique(value, index, self) {
+		  return self.indexOf(value) === index;
+		}
+		
+		function CheckOut() {
+			
+			var totalPrice = 0;
+			var totalQty = 0;
+			
+			var uniqueCartArray = cartArray.filter(onlyUnique);
+			
+			uniqueCartArray.sort();
+			
+			document.getElementById("galleryArea").style.display = "none";	
+			
+			document.getElementById("checkoutTable").style.display = "block";	
+			
+			document.getElementById("continueBtn").style.display = "block";
+			
+			document.getElementById("checkoutBtn").style.display = "none";
+			
+			var html = "";			
+			for (var i = 0; i < uniqueCartArray.length; i++){
+				
+				// nested loops
+				// if there is a loop and you put another loop inside the loop then this is called nested loop.
+				var qty = 0;
+				for (var j = 0; j < cartArray.length; j++){
+					if (cartArray[j] == uniqueCartArray[i]){
+						qty++;
+						totalQty++;
+					}
+				}
+				
+				html = html + "<tr><td>"+productnames[uniqueCartArray[i]]+"</td><td>"+productprices[uniqueCartArray[i]]+"</td><td><button onClick='DecreaseQuantity("+uniqueCartArray[i]+")' type='button' class='btn btn-danger'>-</button> "+qty+" <button onClick='IncreaseQuantity("+uniqueCartArray[i]+")' type='button' class='btn btn-success'>+</button></td><td>"+(productprices[uniqueCartArray[i]] * qty)+"</td><td><button onClick='RemoveProductFromCart("+uniqueCartArray[i]+")' id='checkoutBtn' type='button' class='btn btn-danger'>Delete</button></td></tr>";
+				
+				totalPrice = totalPrice + (productprices[uniqueCartArray[i]] * qty);
+				
+			}
+			
+			var discount = 0;
+			var shipping = 0;
+			
+			
+			if (totalQty >= 10) {
+				html = html + "<tr><th>Discount</th><th>-</th><th></th><th>-500</th></tr>";
+				discount = 500;
+			}
+			
+			if (totalPrice >= 2000) {
+				html = html + "<tr><th>Shipping</th><th>-</th><th></th><th>0</th></tr>";
+				shipping = 0;
+			}
+			else {
+				html = html + "<tr><th>Shipping</th><th>-</th><th></th><th>150</th></tr>";
+				shipping = 150
+			}
+			
+			html = html + "<tr><th>Total</th><th>-</th><th>"+totalQty+"</th><th>"+(totalPrice-discount+shipping)+"</th></tr>";
+			
+			document.getElementById("tableBody").innerHTML = html;
+		}
+		
+		function ContinueShopping(){
+			document.getElementById("galleryArea").style.display = "block";			
+			document.getElementById("checkoutTable").style.display = "none";	
+			document.getElementById("continueBtn").style.display = "none";
+			document.getElementById("checkoutBtn").style.display = "block";
+		}
+		
+		function RemoveProductFromCart(value){
+
+			var i = 0;
+			while (i < cartArray.length) {
+				if (cartArray[i] === value) {
+					cartArray.splice(i, 1);
+
+					// setting in local storage
+					localStorage.setItem("cartArray", JSON.stringify(cartArray));
+					
+
+				} 
+				else {
+					++i;
+				}
+			}
+			
+			document.getElementById("cartCounter").innerHTML = " " + cartArray.length;
+			
+			CheckOut();
+		}
+		
+		function DecreaseQuantity(id){
+			var i = 0;
+			while (i < cartArray.length) {
+				
+				if (cartArray[i] === id) {
+					
+					cartArray.splice(i, 1);
+
+					// setting in local storage
+					localStorage.setItem("cartArray", JSON.stringify(cartArray));
+
+					document.getElementById("cartCounter").innerHTML = " " + cartArray.length;
+					CheckOut();
+					break;
+					
+				} 
+				else {
+					++i;
+				}
+			}
+		}
+		
+		function IncreaseQuantity(id){
+			cartArray.push(id);		// product is added into cart with 1 qty
+
+			// setting in local storage
+			localStorage.setItem("cartArray", JSON.stringify(cartArray));
+
+			document.getElementById("cartCounter").innerHTML = " " + cartArray.length;	// only cart icon value is upadted
+			CheckOut();  // table is recreated completely
+		}
+		
+		function Search(){
+			var searchValue = document.getElementById("searchTxt").value.toLowerCase();
+			
+			document.getElementById("checkoutTable").style.display = "none";
+			document.getElementById("continueBtn").style.display = "none";
+
+			var html2 = "";	
+			
+			for (var i = 0; i < 56; i++){
+				if (searchValue != "" && searchValue != undefined) {
+					if (productnames[i].toLowerCase().includes(searchValue) || searchValue.includes(productnames[i].toLowerCase())) {
+						html2 = html2 + "<div class='column'><div class='content'><img src='../img/m"+i+".jpg' alt='Mountains' style='width:100%'><h3>"+productnames[i]+"</h3><h5>Rs. "+productprices[i]+"/=</h5><button onClick='AddProductToCart("+i+")' type='button' class='btn btn-outline-warning'>Add to Cart</button></div></div>";
+					}
+				}
+				else {
+					html2 = html2 + "<div class='column'><div class='content'><img src='../img/m"+i+".jpg' alt='Mountains' style='width:100%'><h3>"+productnames[i]+"</h3><h5>Rs. "+productprices[i]+"/=</h5><button onClick='AddProductToCart("+i+")' type='button' class='btn btn-outline-warning'>Add to Cart</button></div></div>";
+				}
+			}
+
+			document.getElementById("galleryArea").innerHTML = html2;
+			
+		}
+		
+		function Search2(){
+			
+			var searchTextValue = document.getElementById("searchTxt").value.toLowerCase();
+			
+			document.getElementById("galleryArea").style.display = "block";			
+			document.getElementById("checkoutTable").style.display = "none";	
+			document.getElementById("continueBtn").style.display = "none";
+			document.getElementById("checkoutBtn").style.display = "block";
+			
+			var html2 = "";
+			
+			for (var i = 0; i < 56; i++){
+				
+				if (productnames[i].toLowerCase().includes(searchTextValue) || searchTextValue.includes(productnames[i].toLowerCase())){
+					html2 = html2 + "<div class='column'><div style='height: 400px !important;' class='content'><img src='../img/m"+i+".jpg' alt='Mountains' style='width:100%'><h3>"+productnames[i]+"</h3><h5>Rs. "+productprices[i]+"/=</h5><button onClick='AddProductToCart("+i+")' type='button' class='btn btn-outline-warning'>Add to Cart</button></div></div>";
+				}
+			}
+			
+			document.getElementById("galleryArea").innerHTML = html2;
+		}
+		
+	</script>
+	
+</body>
+</html>
