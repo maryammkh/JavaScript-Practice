@@ -11,19 +11,17 @@
   <style>
     .calBtn {
         width: 100%;
-        color: antiquewhite   
+        color: antiquewhite;
     }
   </style>
 </head>
 <body>
-<h1>my work</h1>
 <h1>my work</h1>
 
 
 <div class="container mt-3">
   <div class="row">
     <div class="col-md-3">
-      ///gjgaqwdjhgd
     </div>
     <div class="col-md-6">
       <div class="container mt-3">
@@ -100,14 +98,10 @@
                 <button value="=" type="button" class="btn btn-primary calBtn" onclick="Calculate()">=</button>
             </div>
         </div>
-        </div>
-
+    </div>
       </div>
     </div>
   </div>
-
-  
-  
 </div>
 
 <script>
@@ -205,6 +199,8 @@
         else if (operator == "/") {
             result = parseFloat(Value_1) / parseFloat(Value_2)
         }
+
+        //
 
         document.getElementById("number").value = result;
         document.getElementById("resultText").innerHTML += " " + Value_2 + " =";
